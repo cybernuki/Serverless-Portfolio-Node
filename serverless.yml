@@ -11,5 +11,11 @@ functions:
   app:
     handler: index.handler
     events:
-      - http: ANY /
-      - http: 'ANY {proxy+}'
+      - http: 
+          path: /
+          method: get
+          cors: true
+      - http: 
+          path: '/{proxy+}'
+          method: any
+          cors: true

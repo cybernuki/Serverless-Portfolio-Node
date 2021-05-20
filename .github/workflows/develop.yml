@@ -9,7 +9,6 @@
 # Learn more: https://maxkostinevich.com/blog/how-to-deploy-serverless-applications-using-github-actions/
 #
 
-
 name: Deploy Dev
 on:
   push:
@@ -23,19 +22,15 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: '14.x'
-    - name: Install Serverless Framework
-      run: npm install -g serverless
-    - name: Serverless AWS authentication
-      run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
     - name: Create env file
       run: | # cp sample.env.yml env.yml
         cat > env.yml << EOF
         ${{ secrets.ENV }}
         EOF
-    - name: Install NPM dependencies
+    - name: Install NPM dependencies and test
       run: npm install
-    # Optional
-    #- name: Build assets
-    #  run: npm run assets-dev
+      run: npm test
     - name: Deploy Lambda functions
+      run: npm install -g serverless
+      run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
       run: sls deploy
