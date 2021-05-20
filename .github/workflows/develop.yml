@@ -18,19 +18,22 @@ jobs:
   deploy-dev:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '14.x'
-    - name: Create env file
-      run: | # cp sample.env.yml env.yml
-        cat > env.yml << EOF
-        ${{ secrets.ENV }}
-        EOF
-    - name: Install NPM dependencies and test
-      run: npm install
-      run: npm test
-    - name: Deploy Lambda functions
-      run: npm install -g serverless
-      run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
-      run: sls deploy
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - name: Create env file
+        run: | # cp sample.env.yml env.yml
+          cat > env.yml << EOF
+          ${{ secrets.ENV }}
+          EOF
+      - name: Install NPM dependencies and test
+        run: npm install
+      - name: Execute Tests
+        run: npm test
+      - name: Install Serverless Framework
+        run: npm install -g serverless
+      - name: Serverless AWS authentication
+        run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
+      - name: Deploy Lambda functions
+        run: sls deploy
