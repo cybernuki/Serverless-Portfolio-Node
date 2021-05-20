@@ -1,0 +1,15 @@
+{
+  "name": "zemoga_test_api",
+  "version": "1.0.0",
+  "description": "It is a serverless API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jhonatan Arenas",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "serverless-http": "^2.7.0"
+  }
+}
