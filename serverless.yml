@@ -13,7 +13,7 @@ provider:
         - dynamodb:GetItem
         - dynamodb:UpdateItem
       Resource:
-        - { "Fn::GetAtt": ["UsersDynamoDBTable", "Arn"] }
+        - { "Fn::GetAtt": ["PortfoliosDynamoDBTable", "Arn"] }
   environment:
     PORTFOLIOS_TABLE: ${self:custom.tableName}
 
