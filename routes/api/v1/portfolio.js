@@ -1,6 +1,6 @@
 const express = require('express');
-const validator = require('./../../../validations/api/v1/portfolioValidations');
-const {store, first} = require('../../../controller/api/v1/portfolio/portfolioController');
+const {store_validations, update_validations} = require('./../../../validations/api/v1/portfolioValidations');
+const {store_service, get_first_service, update_first_service} = require('../../../controller/api/v1/portfolio/portfolioController');
 const router = express.Router();
 
 /** GET portfolio. 
@@ -21,7 +21,7 @@ const router = express.Router();
  * ]
  * }
 */
-router.get('/portfolios/first', first);
+router.get('/portfolios/first', get_first_service);
 
 /** GET portfolio. 
  * This route allows to modifed the first portfolio saved on database
@@ -41,9 +41,7 @@ router.get('/portfolios/first', first);
  * ]
  * }
 */
-router.patch('/portfolios/first', function (req, res) {
-	res.status(200).json('to implement');
-});
+router.patch('/portfolios/first', update_validations, update_first_service);
 
 /** POST portfolio. 
  * This route allows to create a portfolio on database
@@ -63,6 +61,6 @@ router.patch('/portfolios/first', function (req, res) {
  * ]
  * }
 */
-router.post('/portfolios', validator, store);
+router.post('/portfolios', store_validations, store_service);
 
 module.exports = router;

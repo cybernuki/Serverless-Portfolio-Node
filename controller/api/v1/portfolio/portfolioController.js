@@ -1,8 +1,8 @@
-const {save, first} = require('./../../../../services/v1/portfolio/portfolioService');
+const {save, first, update_first} = require('./../../../../services/v1/portfolio/portfolioService');
 const { validationResult } = require('express-validator');
 portfolioController = { name: 'portfolioController' };
 
-portfolioController.store = async (req, res) =>{
+portfolioController.store_service = async (req, res) =>{
 	const errors = validationResult(req);
 
 	if (!errors.isEmpty()) {
@@ -24,13 +24,41 @@ portfolioController.store = async (req, res) =>{
 	return res.status(200).json({portfolio});
 };
 
-portfolioController.first = async (req, res) =>{
+portfolioController.get_first_service = async (req, res) =>{
 
 	const portfolio = await first().catch(err => {
 		console.log(err);
 		return null;
 	});
 
+
+	return res.status(200).json({portfolio});
+};
+
+portfolioController.update_first_service = async (req, res) =>{
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({
+			success: false,
+			errors: errors.array()
+		});
+	}
+
+	Object.entries(req.body).forEach(async(element) => {
+		if (element[1] !== undefined)
+		{
+			await update_first(element[0], element[1]).catch(err => {
+				console.log(err);
+				return null;
+			});
+		}
+	});
+
+	const portfolio = await first().catch(err => {
+		console.log(err);
+		return null;
+	});
 
 	return res.status(200).json({portfolio});
 };
