@@ -33,6 +33,8 @@ jobs:
         run: npm install -g serverless
       - name: Serverless AWS authentication
         run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
+      - name: Install dynamodb localy
+        run: sls dynamodb install
       - name: Execute Tests
         run: |
           sls dynamodb start &
