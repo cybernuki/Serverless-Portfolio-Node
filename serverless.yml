@@ -12,6 +12,7 @@ provider:
         - dynamodb:Scan
         - dynamodb:GetItem
         - dynamodb:UpdateItem
+        - dynamodb:PutItem
       Resource:
         - { "Fn::GetAtt": ["PortfoliosDynamoDBTable", "Arn"] }
   environment:
