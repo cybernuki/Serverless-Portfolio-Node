@@ -1,4 +1,3 @@
-
 service: zemoga-test-api
 
 provider:
@@ -6,16 +5,56 @@ provider:
   runtime: nodejs14.x
   stage: dev
   region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:UpdateItem
+      Resource:
+        - { "Fn::GetAtt": ["UsersDynamoDBTable", "Arn"] }
+  environment:
+    PORTFOLIOS_TABLE: ${self:custom.tableName}
+
+custom:
+  tableName: "portfolios-table"
+  dynamodb:
+    stages:
+      - dev
+    start:
+      inMemory: true
+      migrate: true
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
 
 functions:
   app:
     handler: index.handler
     events:
-      - http: 
+      - http:
           path: /
           method: get
           cors: true
-      - http: 
-          path: '/{proxy+}'
+      - http:
+          path: "/{proxy+}"
           method: any
           cors: true
+
+resources:
+  Resources:
+    PortfoliosDynamoDBTable:
+      Type: "AWS::DynamoDB::Table"
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:custom.tableName}

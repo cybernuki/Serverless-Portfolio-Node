@@ -29,10 +29,12 @@ jobs:
           EOF
       - name: Install NPM dependencies and test
         run: npm install
-      - name: Execute Tests
-        run: npm test
       - name: Install Serverless Framework
         run: npm install -g serverless
+      - name: Execute dynamoDb offline
+        run: sls dynamodb start &
+      - name: Execute Tests
+        run: npm test
       - name: Serverless AWS authentication
         run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
       - name: Deploy Lambda functions
