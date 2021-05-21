@@ -27,7 +27,7 @@ jobs:
           cat > env.yml << EOF
           ${{ secrets.ENV }}
           EOF
-      - name: Install NPM dependencies and test
+      - name: Install NPM dependencies
         run: npm install
       - name: Install Serverless Framework
         run: npm install -g serverless
