@@ -16,7 +16,6 @@ if (process.env.JEST_WORKER_ID) {
   	};
 }
 
-console.log(options);
 const documentClient = new AWS.DynamoDB.DocumentClient(options);
 
 module.exports = documentClient;
