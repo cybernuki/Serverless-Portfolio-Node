@@ -1,4 +1,4 @@
-const {save} = require('./../../../../services/v1/portfolio/portfolioService');
+const {save, first} = require('./../../../../services/v1/portfolio/portfolioService');
 const { validationResult } = require('express-validator');
 portfolioController = { name: 'portfolioController' };
 
@@ -20,6 +20,17 @@ portfolioController.store = async (req, res) =>{
 	if (!portfolio) {
 		return res.status(400).json({ message: 'Failed to write portfolio by ID' });
 	}
+
+	return res.status(200).json({portfolio});
+};
+
+portfolioController.first = async (req, res) =>{
+
+	const portfolio = await first().catch(err => {
+		console.log(err);
+		return null;
+	});
+
 
 	return res.status(200).json({portfolio});
 };
