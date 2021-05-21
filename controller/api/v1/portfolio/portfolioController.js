@@ -1,18 +1,18 @@
 const {save} = require('./../../../../services/v1/portfolio/portfolioService');
+const { validationResult } = require('express-validator');
 portfolioController = { name: 'portfolioController' };
 
 portfolioController.store = async (req, res) =>{
-	const { id, name } = req.body;
-	if (typeof id !== 'string') {
-	  res.status(400).json({ error: '"id" must be a string' });
-	  return;
-	}
-	if (typeof name !== 'string') {
-	  res.status(400).json({ error: '"name" must be a string' });
-	  return;
+	const errors = validationResult(req);
+
+	if (!errors.isEmpty()) {
+		return res.status(400).json({
+			success: false,
+			errors: errors.array()
+		});
 	}
 
-	const portfolio = await save(id, name).catch(err => {
+	const portfolio = await save(req.body).catch(err => {
 		console.log(err);
 		return null;
 	});

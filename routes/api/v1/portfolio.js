@@ -1,4 +1,5 @@
 const express = require('express');
+const validator = require('./../../../validations/api/v1/portfolioValidations');
 const {store} = require('../../../controller/api/v1/portfolio/portfolioController');
 const router = express.Router();
 
@@ -6,39 +7,64 @@ const router = express.Router();
  * This route returns all information of the first portfolio saved on database
  * response's body:
  * {
- * //TODO check response resource
  *  status: 'ok',
- *  data: [aspirants]
+ *  data: [
+ * 		id,
+ * 		names,
+ * 		last_names,
+ * 		description,
+ * 		image_url,
+ * 		title,
+ * 		experience_summary,
+ * 		twitter_user_name,
+ * 		twitter_user_id,
+ * ]
  * }
 */
-router.get('/portfolio', function (req, res) {
+router.get('/portfolios/first', function (req, res) {
 	res.status(200).json('to implement');
 });
 
 /** GET portfolio. 
  * This route allows to modifed the first portfolio saved on database
- * //TODO check response resource
- * //TODO check request validation
  * response's body:
  * {
  *  status: 'ok',
- *  data: [aspirants]
+ *  data: [
+ * 		id,
+ * 		names,
+ * 		last_names,
+ * 		description,
+ * 		image_url,
+ * 		title,
+ * 		experience_summary,
+ * 		twitter_user_name,
+ * 		twitter_user_id,
+ * ]
  * }
 */
-router.patch('/portfolio', function (req, res) {
+router.patch('/portfolios/first', function (req, res) {
 	res.status(200).json('to implement');
 });
 
 /** POST portfolio. 
- * This route allows to modifed the first portfolio saved on database
- * //TODO check response resource
- * //TODO check request validation
+ * This route allows to create a portfolio on database
  * response's body:
  * {
  *  status: 'ok',
- *  data: [aspirants]
+ *  data: [
+ * 		id,
+ * 		names,
+ * 		last_names,
+ * 		description,
+ * 		image_url,
+ * 		title,
+ * 		experience_summary,
+ * 		twitter_user_name,
+ * 		twitter_user_id,
+ * ]
  * }
 */
-router.post('/portfolio', store);
+router.post('/portfolios', validator, store);
 
 module.exports = router;
