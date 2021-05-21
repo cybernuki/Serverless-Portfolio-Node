@@ -34,7 +34,7 @@ jobs:
       - name: Serverless AWS authentication
         run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
       - name: Execute dynamoDb offline
-        run: sls dynamodb start &
+        run: sls dynamodb start
       - name: Execute Tests
         run: npm test
       - name: Deploy Lambda functions
