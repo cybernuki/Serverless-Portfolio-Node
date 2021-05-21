@@ -35,9 +35,9 @@ jobs:
         run: sls config credentials --provider aws --key ${{ secrets.AWS_KEY }} --secret ${{ secrets.AWS_SECRET }}
       - name: Install dynamodb localy
         run: sls dynamodb install
-      - name: Execute Tests
-        run: |
-          sls dynamodb start &
-          npm test
+      #- name: Execute Tests
+      #  run: |
+      #    sls dynamodb start &
+      #    npm test
       - name: Deploy Lambda functions
         run: sls deploy

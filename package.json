@@ -4,7 +4,7 @@
   "description": "It is a serverless API",
   "main": "index.js",
   "scripts": {
-    "test": "jest --detectOpenHandles"
+    "test": "jest"
   },
   "author": "Jhonatan Arenas",
   "license": "ISC",
